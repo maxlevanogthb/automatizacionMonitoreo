@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff; /* Fondo blanco */
+            color: #000000; /* Texto negro */
+            padding: 20px;
+        }
+        .header-text {
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+        th {
+            background-color: #24498a; /* Azul institucional de tu original */
+            color: white;
+            border: 1px solid #888888; /* Borde gris para que se distingan las celdas */
+            padding: 8px;
+            text-align: center;
+        }
+        td {
+            border: 1px solid #888888; /* Borde gris */
+            padding: 8px;
+            text-align: center;
+            background-color: #ffffff; /* Fondo blanco en las celdas */
+        }
+        .notas-section {
+            margin-top: 20px;
+            font-size: 13px;
+        }
+        .footer-text {
+            margin-top: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-text">
+        Hola, buen día.<br>
+        {% if tipo_reporte == 'polizas' %}
+            Les comparto el estatus de procesamiento de pólizas al momento.
+        {% else %}
+            Les comparto el estatus actual de monitoreo para los países activos y autorizados.
+        {% endif %}
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>País</th>
+                <th>Fecha</th>
+                <th>Centros de Ventas</th>
+                <th>Ivy_Ficha_de</th>
+                <th>Ivy_Efectivo</th>
+                <th>Ivy_Mov_Det</th>
+                <th>Archivos Fac</th>
+                <th>Archivos procesados</th>
+                <th>Archivos en el FTP</th>
+                <th>Pólizas Procesadas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for codigo, datos in datos_tabla.items() %}
+            <tr>
+                <td>{{ datos.nombre }}</td>
+                <td>{{ datos.fecha }}</td>
+                <td>{{ datos.centros }}</td>
+                <td>{{ datos.ficha }}</td>
+                <td>{{ datos.efectivo }}</td>
+                <td>{{ datos.mov_det }}</td>
+                <td>{{ datos.fac }}</td>
+                <td>{{ datos.procesados }}</td>
+                <td>{{ datos.ftp }}</td>
+                <td>{{ datos.polizas }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="notas-section">
+        <strong>Notas:</strong>
+        <ul>
+            {% for linea in notas.split('\n') %}
+                {% if linea.strip() %}
+                    <li>{{ linea }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="footer-text">
+        Informamos que el proceso ha sido objeto de monitoreo. La información está bajo la supervisión del equipo correspondiente.
+    </div>
+
+</body>
+</html>

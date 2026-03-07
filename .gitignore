@@ -1,0 +1,11 @@
+.env
+config.cpython-314.pyc
+memoria.cpython-314.pyc
+notificador.cpython-314.pyc
+oracle_db.cpython-314.pyc
+sftp_server.cpython-314.pyc
+node_modules/
+estados.json
+notas.json
+config.json
+*.log

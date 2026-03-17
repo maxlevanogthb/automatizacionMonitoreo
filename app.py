@@ -123,7 +123,7 @@ def index():
     alertas_preventivas = []
     
     for country, datos in datos_completos.items():
-        # A. Errores de SFTP/Logs (¡SE VALIDAN SIEMPRE, INCLUSO SI ESTÁ APAGADO!)
+        # Errores de SFTP/Logs (¡SE VALIDAN SIEMPRE, INCLUSO SI ESTÁ APAGADO!)
             if "archivos_error" in datos and datos["archivos_error"]:
                 duplicados = [archivo.replace(" (D)", "") for archivo in datos["archivos_error"] if "(D)" in archivo]
                 errores = [archivo.replace(" (E)", "") for archivo in datos["archivos_error"] if "(E)" in archivo]
@@ -133,12 +133,11 @@ def index():
                 if errores:
                     notas_errores.append(f"En {datos['nombre']}, los siguientes archivos marcaron Error (E): {', '.join(errores)}.")
             
-            # ¡NUEVA POSICIÓN DEL CANDADO! 
             # Si el país está apagado, saltamos ÚNICAMENTE las validaciones de Cuadratura
             if estados_guardados.get(country) == 'apagado':
                 continue 
                 
-            # B. Alerta Inteligente de Cuadratura (FAC vs PROCESADOS vs AR_FILE)
+            # Alerta Inteligente de Cuadratura (FAC vs PROCESADOS vs AR_FILE)
             try: fac_int = int(datos.get("fac", 0) or 0)
             except: fac_int = 0
                 
@@ -183,7 +182,6 @@ def procesar_y_enviar_correo(destinatarios, copias, notas_usuario, estados_guard
             notas_errores = []
             for country, datos in datos_completos.items():
                 
-                # ¡AQUÍ ESTÁ LA MAGIA! Borramos el "continue"
                 # Ahora siempre revisará los archivos físicos (D/E), incluso si el país está apagado
                 if "archivos_error" in datos and datos["archivos_error"]:
                     duplicados = [archivo.replace(" (D)", "") for archivo in datos["archivos_error"] if "(D)" in archivo]
